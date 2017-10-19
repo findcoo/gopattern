@@ -1,0 +1,4 @@
+package: github.com/findcoo/gopattern
+import:
+- package: github.com/fatih/color
+  version: ~1.5.0
