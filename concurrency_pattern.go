@@ -21,8 +21,8 @@ type bodyData struct {
 	Error error
 }
 
-func futureData(url string) <-chan data {
-	pipe := make(chan data, 1)
+func futureData(url string) <-chan bodyData {
+	pipe := make(chan bodyData, 1)
 
 	go func() {
 		var body []byte
@@ -32,7 +32,7 @@ func futureData(url string) <-chan data {
 		defer resp.Body.Close()
 
 		body, err = ioutil.ReadAll(resp.Body)
-		pipe <- data{Body: body, Error: err}
+		pipe <- bodyData{Body: body, Error: err}
 	}()
 
 	return pipe
