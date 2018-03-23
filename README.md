@@ -1,5 +1,90 @@
 # Gopattern
 
+## 일반적으로 사용되는 비동기 패턴
+
+### generator
+```go
+func numberGenerator(n int) <-chan int {
+	nState := make(chan int)
+	go func() {
+		for i := 1; i <= n; i = i + 1 {
+			nState <- i
+		}
+		defer close(nState)
+	}()
+	return nState
+}
+
+func main() {
+	state := numberGenerator(100)
+
+	for {
+		select {
+		case recieved := <-state:
+			if recieved >= 100 {
+				t.Log("NumberGenerator test success")
+				return
+			}
+		}
+	}
+}
+```
+
+### future
+```go
+func futureData(url string) <-chan bodyData {
+	pipe := make(chan bodyData, 1)
+
+	go func() {
+		var body []byte
+		var err error
+
+		resp, err := http.Get(url)
+		defer resp.Body.Close()
+
+		body, err = ioutil.ReadAll(resp.Body)
+		pipe <- bodyData{Body: body, Error: err}
+	}()
+
+	return pipe
+}
+
+func main() {
+	data := futureData(testServer.URL)
+	expected := bodyData{Body: []byte("Test Server"), Error: nil}
+	assert.Equal(t, expected, <-data)
+}
+```
+
+### waitGroup
+```go
+func wgSchedule() {
+	var numArray []int
+
+	for i := 0; i <= 100; i = i + 1 {
+		numArray = append(numArray, i%10)
+	}
+
+	waitGroup := &sync.WaitGroup{}
+	printNum := func(wg *sync.WaitGroup, n int) {
+		print(n)
+		wg.Done()
+	}
+
+	for _, v := range numArray {
+		waitGroup.Add(1)
+		go printNum(waitGroup, v)
+
+		if v%9 == 0 && v != 0 {
+			waitGroup.Wait()
+			println()
+		}
+	}
+}
+```
+
+
+
 ## 유용한 도구들
 * [gore](https://github.com/motemen/gore): REPL 도구
 * [gin](https://github.com/gin-gonic/gin): 경량 웹프레임워크
