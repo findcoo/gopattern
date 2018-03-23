@@ -5,8 +5,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"io"
+
+	"github.com/stretchr/testify/assert"
 )
 
 var testServer *httptest.Server
@@ -37,4 +38,8 @@ func TestFutureData(t *testing.T) {
 	data := futureData(testServer.URL)
 	expected := bodyData{Body: []byte("Test Server"), Error: nil}
 	assert.Equal(t, expected, <-data)
+}
+
+func TestWGScheduleTest(t *testing.T) {
+	wgSchedule()
 }

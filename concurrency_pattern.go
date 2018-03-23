@@ -3,6 +3,7 @@ package gopattern
 import (
 	"io/ioutil"
 	"net/http"
+	"sync"
 )
 
 func numberGenerator(n int) <-chan int {
@@ -36,4 +37,28 @@ func futureData(url string) <-chan bodyData {
 	}()
 
 	return pipe
+}
+
+func wgSchedule() {
+	var numArray []int
+
+	for i := 0; i <= 100; i = i + 1 {
+		numArray = append(numArray, i%10)
+	}
+
+	waitGroup := &sync.WaitGroup{}
+	printNum := func(wg *sync.WaitGroup, n int) {
+		print(n)
+		wg.Done()
+	}
+
+	for _, v := range numArray {
+		waitGroup.Add(1)
+		printNum(waitGroup, v)
+
+		if v%9 == 0 && v != 0 {
+			println()
+			waitGroup.Wait()
+		}
+	}
 }
