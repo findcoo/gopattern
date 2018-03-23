@@ -54,11 +54,11 @@ func wgSchedule() {
 
 	for _, v := range numArray {
 		waitGroup.Add(1)
-		printNum(waitGroup, v)
+		go printNum(waitGroup, v)
 
 		if v%9 == 0 && v != 0 {
-			println()
 			waitGroup.Wait()
+			println()
 		}
 	}
 }
