@@ -43,3 +43,31 @@ func TestFutureData(t *testing.T) {
 func TestWGScheduleTest(t *testing.T) {
 	wgSchedule()
 }
+
+func TestOnceDo(t *testing.T) {
+	onceDo(50)
+}
+
+func TestSelectCase(t *testing.T) {
+	selectCase()
+}
+
+func TestBufferedChannel(t *testing.T) {
+	c := bufferedChannel()
+	for {
+		select {
+		case num := <-c:
+			print(num)
+		}
+	}
+}
+
+func TestUnbufferedChannel(t *testing.T) {
+	c := unbufferedChannel()
+	for {
+		select {
+		case num := <-c:
+			print(num)
+		}
+	}
+}

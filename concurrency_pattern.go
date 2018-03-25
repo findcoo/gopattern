@@ -1,6 +1,7 @@
 package gopattern
 
 import (
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"sync"
@@ -61,4 +62,55 @@ func wgSchedule() {
 			println()
 		}
 	}
+}
+
+func onceDo(n int) {
+	var justOne int
+	var once sync.Once
+	wg := &sync.WaitGroup{}
+
+	increaseCount := func() {
+		justOne++
+		print("set one")
+	}
+
+	doOne := func() {
+		once.Do(increaseCount)
+		println(justOne)
+		defer wg.Done()
+	}
+
+	wg.Add(n + 1)
+	for i := 0; i <= n; i++ {
+		go doOne()
+	}
+	wg.Wait()
+}
+
+func selectCase() {
+	nState := numberGenerator(100)
+	lock := &sync.Mutex{}
+
+	for {
+		select {
+		case num := <-nState:
+			lock.Lock()
+			print(num)
+		case num := <-nState:
+			fmt.Printf("%d print line 2", num)
+		}
+	}
+}
+
+func bufferedChannel() <-chan int {
+	c := make(chan int, 3)
+	c <- 1
+	c <- 2
+	return c
+}
+
+func unbufferedChannel() <-chan int {
+	c := make(chan int)
+	c <- 1
+	return c
 }
