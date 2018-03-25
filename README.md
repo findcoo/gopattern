@@ -13,6 +13,7 @@ If you must read the rest of this document to understand the behavior of your pr
 
 Don't be clever.
 </details>
+
 고의 메모리 모델은 하나의 변수가 다른 고루틴에 의해 변경되고 다른 고루틴이 이 변수에 접근할 때 변경되는 값들을 읽는 것을 보장하는 것에 주안점을 두고 있습니다.
 변수에 대한 쓰기 작업을 하는 고루틴은 고의 동기화 로직을 통해 직렬화 되야합니다. 동기화에 필요한 모듈은 `sync` 혹은 `sync/atomic` 패키지 혹은 `gochannel` 를 통해 지원됩니다.
 
@@ -23,10 +24,11 @@ Within a single goroutine, reads and writes must behave as if they executed in t
 
 To specify the requirements of reads and writes, we define happens before, a partial order on the execution of memory operations in a Go program. If event e1 happens before event e2, then we say that e2 happens after e1. Also, if e1 does not happen before e2 and does not happen after e2, then we say that e1 and e2 happen concurrently.
 </details>
+
 읽기 및 쓰기 작업은 프로그램에 의해 지정된 순서에 맞게 실행됩니다. 즉 단일 고루틴이 정의된 작업을 변경하지 않는 경우에만 컴파일러와 프로세서는 작업 순서를 재정렬 할 수 있습니다.
 재정렬을 통해 다른 고루틴은 변경사항을 감시하는 것이 가능합니다. 예로 하나의 고루틴이 `a = 1; b = 2` 작업을 수행하면 다른 고루틴은 `b = 2`를 먼저 관찰하고 이전에 발생한 `a = 1` 작업도 관찰합니다.
 
-읽기 및 쓰기 작업에 대한 요구사항을 우리는 <b>Happens before</b>라고 정의합니다. 메모리 실행 순서를 예로 든다면  e<sup>1</sup> 이벤트는 e<sup>2</sup>전에 발생하면 우리는 일련의 작업이 순차적으로 발생함을 알수 있습니다. 이와 달리 e<sup>1</sup>이 e<sup>2</sup> 이전에도 발생하지 않고 이후에도 발생하지 않는다면 이는 작업이 동시에 이루어짐을 뜻합니다.
+읽기 및 쓰기 작업에 대한 요구사항을 우리는 <b>Happens before</b>라고 정의합니다. 메모리 실행 순서를 예로 든다면  e<sub>1</sub> 이벤트는 e<sub>2</sub>전에 발생하면 우리는 일련의 작업이 순차적으로 발생함을 알수 있습니다. 이와 달리 e<sub>1</sub>이 e<sub>2</sub> 이전에도 발생하지 않고 이후에도 발생하지 않는다면 이는 작업이 동시에 이루어짐을 뜻합니다.
 
 #### Synchronization
 
