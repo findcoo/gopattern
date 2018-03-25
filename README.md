@@ -218,6 +218,57 @@ func unbufferedChannel() <-chan int {
 ```
 unbuffured channel은 입력시 출력을 해주는 부분이 없으면 락이 걸립니다. 보통 입력 부분에서 대기할 필요가 있을 때 사용됩니다.
 
+### Json
+```go
+type DataSet struct {
+	ID   uint64 `json:"id"`
+	Name string `json:"name"`
+}
+
+func jsonFromReader() *DataSet {
+	data := &DataSet{}
+	json.NewDecoder(bytes.NewReader([]byte(`{"id": 1, "name": "findcoo"}`))).Decode(data)
+	return data
+}
+
+func jsonFromVar() *DataSet {
+	data := &DataSet{}
+	json.Unmarshal([]byte(`{"id": 2, "name": "findcoo"}`), data)
+	return data
+}
+
+func writerToJSON() []byte {
+	data := &DataSet{
+		ID:   1,
+		Name: "findcoo",
+	}
+
+	buff := &bytes.Buffer{}
+	json.NewEncoder(buff).Encode(data)
+	return buff.Bytes()
+}
+
+func structToJSON() []byte {
+	data := &DataSet{
+		ID:   1,
+		Name: "findcoo",
+	}
+
+	jsonText, _ := json.Marshal(data)
+	return jsonText
+}
+```
+json을 처리할 때는 보통 io 스트림을 이용한 방법과 변수를 이용한 방법으로 나뉩니다.
+생산성을 고려하여 template를 사용하기도 하지만 잘 사용되진 않습니다.
+
+### Time
+#### Format
+```go
+println(time.Now().Format("2006-01-02 15:04:05 MST"))
+```
+시간 포맷은  월, 일, 시, 분, 초, 표준시 순서로 1, 2, 3, 4, 5, 6, -7 을 나타냅니다.
+즉 위 코드중 문자열 부분은 yyyy-mm-dd HH:MM:SS Z 와 같은 시간 형식을 지정한 것 뿐이며 실제 시간을뜻하는 값이 아닙니다.
+
 ## 유용한 도구들
 * [gore](https://github.com/motemen/gore): REPL 도구
 * [gin](https://github.com/gin-gonic/gin): 경량 웹프레임워크
