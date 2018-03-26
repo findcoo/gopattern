@@ -35,6 +35,7 @@ func TestNumberGenerator(t *testing.T) {
 }
 
 func TestFutureData(t *testing.T) {
+	setUpTestServer()
 	data := futureData(testServer.URL)
 	expected := bodyData{Body: []byte("Test Server"), Error: nil}
 	assert.Equal(t, expected, <-data)
