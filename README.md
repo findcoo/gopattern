@@ -306,3 +306,9 @@ println(time.Now().Format("2006-01-02 15:04:05 MST"))
 ## Go 기반 주목 받는 프로젝트들
 * [cockroachdb](https://github.com/cockroachdb/cockroach): 분산 SQL 데이터베이스
 * [NSQ](https://github.com/nsqio/nsq): 실시간 분산 메세지 큐 시스템
+
+## 읽어볼만한 글
+* [Context 잘 쓰는 법](https://medium.com/@cep21/how-to-correctly-use-context-context-in-go-1-7-8f2c0fafdf39)
+* [Go언어의 성능 역사](https://blog.twitch.tv/gos-march-to-low-latency-gc-a6fa96f06eb7)
+* [Go언어 GC에 대하여](https://blog.plan99.net/modern-garbage-collection-911ef4f8bd8e)
+* [Go언어와 딱히 상관없지만 재귀함수에 대하여](https://medium.com/@felipedutratine/iterative-vs-recursive-vs-tail-recursive-in-golang-c196ca5fd489)
