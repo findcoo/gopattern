@@ -289,6 +289,7 @@ println(time.Now().Format("2006-01-02 15:04:05 MST"))
 ## 유용한 도구들
 * [gore](https://github.com/motemen/gore): REPL 도구
 * [gin](https://github.com/gin-gonic/gin): 경량 웹프레임워크
+* [echo](https://github.com/labstack/echo): 경량 웹프레임워크
 * [revel](https://revel.github.io/): 웹프레임워크
 * [beego](https://beego.me/): 웹프레임워크
 * [gorilla](http://www.gorillatoolkit.org/): 웹툴킷
@@ -302,10 +303,14 @@ println(time.Now().Format("2006-01-02 15:04:05 MST"))
 * [viper](https://github.com/spf13/viper): project configuration
 * [pprof](https://golang.org/pkg/net/http/pprof/): golang 어플리케이션 성능 프로파일링
 * [gorelic](https://github.com/yvasiyarov/gorelic): gorutine, 서버 파일 소켓, gc 모니터링 도구
+* [warp](https://github.com/spolu/warp): 간편한 터미널 쉐어링 도구
+* [gomock](https://github.com/golang/mock): mock 객체 생성 도구
 
 ## Go 기반 주목 받는 프로젝트들
 * [cockroachdb](https://github.com/cockroachdb/cockroach): 분산 SQL 데이터베이스
 * [NSQ](https://github.com/nsqio/nsq): 실시간 분산 메세지 큐 시스템
+* [Vitess](https://vitess.io/): Mysql 클러스터 및 커넥션 풀 관리 도구
+* [Prometheus](https://github.com/prometheus/prometheus): 시계열 데이터베이스를 이용한 시스템 모니터링 도구
 
 ## 읽어볼만한 글
 * [Context 잘 쓰는 법](https://medium.com/@cep21/how-to-correctly-use-context-context-in-go-1-7-8f2c0fafdf39)
