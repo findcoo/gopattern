@@ -261,6 +261,23 @@ func structToJSON() []byte {
 json을 처리할 때는 보통 io 스트림을 이용한 방법과 변수를 이용한 방법으로 나뉩니다.
 생산성을 고려하여 template를 사용하기도 하지만 잘 사용되진 않습니다.
 
+### Panic and defer
+```go
+func handlePanic() {
+	for i := 0; i < 10; i++ {
+		defer func() { println(i) }()
+		if i == 9 {
+			log.Panic("Panic the world")
+		}
+	}
+}
+```
+
+위 코드의 문제는 반복문 안에 defer를 선언한 부분입니다. 9번째 반복에서 panic이 호출되면
+defer 함수는 고루틴의 panic시점 상태를 유지하고 defer 함수를 호출합니다. defer가 호출된 수 만큼 호출됨으로
+만일 프로덕션된 어플리케이션에 위와 같은 부분이 있다면 어플리케이션이 panic상태에 들어갈때, 고루틴이 순간적으로 늘어날 수 있습니다.
+
+
 ### Time
 #### Format
 ```go
@@ -283,6 +300,8 @@ println(time.Now().Format("2006-01-02 15:04:05 MST"))
 * [squirrel](https://github.com/Masterminds/squirrel): SQL 포맷터
 * [sqlx](https://github.com/jmoiron/sqlx): 기본 sql 라이브러리 확장버전
 * [viper](https://github.com/spf13/viper): project configuration
+* [pprof](https://golang.org/pkg/net/http/pprof/): golang 어플리케이션 성능 프로파일링
+* [gorelic](https://github.com/yvasiyarov/gorelic): gorutine, 서버 파일 소켓, gc 모니터링 도구
 
 ## Go 기반 주목 받는 프로젝트들
 * [cockroachdb](https://github.com/cockroachdb/cockroach): 분산 SQL 데이터베이스
